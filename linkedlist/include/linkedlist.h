@@ -5,4 +5,5 @@ private:
 public:
     LinkedList();
     void InsertHead(int value);
+    Node* GetHead();
 };

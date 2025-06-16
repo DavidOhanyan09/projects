@@ -8,7 +8,9 @@ LinkedList::LinkedList()
 }
 void LinkedList::InsertHead(int value)
 {
-    head->value = value;
-    head->next = nullptr;
+    head = new Node(value);
 }
-
+Node* LinkedList::GetHead()
+{
+    return head;
+}

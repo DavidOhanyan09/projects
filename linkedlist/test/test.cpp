@@ -20,10 +20,10 @@ TEST(NODES, thepointer)
      ASSERT_EQ(nullptr, expected);
 }
 
-// TEST(NODES, head_insert)
-// {
-//     LinkedList* head = new LinkedList();
-//     head->InsertHead(12);
-//     int expected = head->head->GetValue();
-//     ASSERT_EQ(expected, 12);
-// }
+TEST(NODES, head_insert)
+{
+    LinkedList* head = new LinkedList();
+    head->InsertHead(12);
+    int expected = head->GetHead()->value;
+    ASSERT_EQ(expected, 12);
+}
