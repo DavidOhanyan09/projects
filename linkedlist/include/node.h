@@ -1,6 +1,6 @@
 class Node 
 {
-private:
+public:
     int value;
     Node* next;
 public:
@@ -13,13 +13,5 @@ public:
     {
         value = data;
         next = nullptr;
-    }
-    int GetValue()
-    {
-        return this->value;
-    }
-    Node* GetNext()
-    {
-        return this->next;
     }
 };
