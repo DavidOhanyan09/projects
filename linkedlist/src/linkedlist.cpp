@@ -65,3 +65,21 @@ void LinkedList::InsertTail(int value)
     }
     temp->next = Tail;
 }
+
+void LinkedList::Remove(int position)
+{
+    Node* temp = head;
+    Node* prev = nullptr;
+    if(head == nullptr)
+    {
+        std::cout << "There is no Node in the List!";
+        return ;
+    }
+    for(int i = 1; i<position; i++)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+    prev->next = temp->next;
+    delete temp;
+}

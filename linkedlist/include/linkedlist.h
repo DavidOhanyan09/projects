@@ -9,4 +9,5 @@ public:
     void Insert(int position, int value);
     int Get(int position);
     void InsertTail(int value);
+    void Remove(int position);
 };

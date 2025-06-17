@@ -59,3 +59,29 @@ TEST(NODES, Tail)
     ASSERT_EQ(expected, actual);
 }
 
+TEST(NODES, Remove2)
+{
+    LinkedList* head = new LinkedList();
+    head->InsertHead(1);
+    head->InsertTail(4);
+    head->Insert(2,2);
+    head->Insert(3,3);
+    head->Remove(2);
+    int expected = 3;
+    int actual = head->Get(2);
+    ASSERT_EQ(expected, actual);
+}
+
+TEST(NODES, RemoveTail)
+{
+    LinkedList* head = new LinkedList();
+    head->InsertHead(1);
+    head->InsertTail(4);
+    head->Insert(2, 2);
+    head->Insert(3,3);
+    head->Remove(4);
+    int expected = 3;
+    int actual = head->Get(3);
+    ASSERT_EQ(expected, actual);
+
+}
