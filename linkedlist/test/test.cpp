@@ -1,87 +1,156 @@
 #include <gtest/gtest.h>
-#include "node.h"
 #include "linkedlist.h"
 TEST(empty_test, empty)
 {
 
 }
 
-TEST(NODES, adding_one_node)
-{
-    Node* head = new Node(12);
-    int expected = head->value;
-    ASSERT_EQ(12, expected);
-}
-
-TEST(NODES, thepointer)
-{
-     Node* head = new Node(12);
-     Node* expected = head->next;
-     ASSERT_EQ(nullptr, expected);
-}
 
 TEST(NODES, head_insert)
 {
-    LinkedList* head = new LinkedList();
-    head->InsertHead(12);
-    int expected = head->GetHead()->value;
+    LinkedList list;
+    list.InsertHead(12);
+    int expected = list.Get(1);
     ASSERT_EQ(expected, 12);
-}
-
-TEST(NODES, NodePosition)
-{
-    LinkedList* head = new LinkedList();
-    head->InsertHead(12);
-    int givven = head->Get(1);
-    int expected = head->GetHead()->value;
-    ASSERT_EQ(expected, givven);
 }
 
 TEST(NODES, INSERT)
 {
-    LinkedList* head = new LinkedList();
-    head->InsertHead(1);
-    head->InsertTail(4);
-    head->Insert(2, 2);
-    head->Insert(3, 3);
+    LinkedList list;
+    list.InsertHead(1);
+    list.InsertTail(4);
+    list.Insert(2, 2);
+    list.Insert(3, 3);
     int expeced_3 = 3;
-    int actual = head->Get(3);
+    int actual = list.Get(3);
     ASSERT_EQ(expeced_3, actual);
 }
 
 TEST(NODES, Tail)
 {
-    LinkedList* head = new LinkedList();
-    head->InsertHead(1);
-    head->InsertTail(2);
+    LinkedList list;
+    list.InsertHead(1);
+    list.InsertTail(2);
     int expected = 2;
-    int actual = head->Get(2);
+    int actual = list.Get(2);
     ASSERT_EQ(expected, actual);
 }
 
 TEST(NODES, Remove2)
 {
-    LinkedList* head = new LinkedList();
-    head->InsertHead(1);
-    head->InsertTail(4);
-    head->Insert(2,2);
-    head->Insert(3,3);
-    head->Remove(2);
+    LinkedList list;
+    list.InsertHead(1);
+    list.InsertTail(4);
+    list.Insert(2,2);
+    list.Insert(3,3);
+    list.Remove(2);
     int expected = 3;
-    int actual = head->Get(2);
+    int actual = list.Get(2);
     ASSERT_EQ(expected, actual);
 }
 
 TEST(NODES, RemoveTail)
 {
-    LinkedList* head = new LinkedList();
-    head->InsertHead(1);
-    head->InsertTail(4);
-    head->Insert(2, 2);
-    head->Insert(3,3);
-    head->Remove(4);
+    LinkedList list;
+    list.InsertHead(1);
+    list.InsertTail(4);
+    list.Insert(2, 2);
+    list.Insert(3,3);
+    list.Remove(4);
     int expected = 3;
-    int actual = head->Get(3);
+    int actual = list.Get(3);
     ASSERT_EQ(expected, actual);
-
 }
+
+TEST(NODES, GetQ)
+{
+    LinkedList list;
+    list.InsertHead(12);
+    list.InsertTail(15);
+    list.Insert(2, 13);
+    list.Insert(3, 14);
+    int expected = list.GetQ();
+    ASSERT_EQ(5, expected);
+}
+
+TEST(NODES, get)
+{
+    LinkedList list;
+    list.InsertHead(12);
+    list.InsertTail(14);
+    list.Insert(2, 13);
+    int expected = list.Get(3);
+    ASSERT_EQ(expected, 14);
+}
+TEST(NODES, headbug)
+{
+    LinkedList list;
+    list.Insert(1, 13);
+    ASSERT_EQ(13, list.Get(1));
+}
+TEST(NODES, tailbug)
+{
+    LinkedList list;
+    list.InsertHead(1);
+    list.Insert(2, 2);
+    ASSERT_EQ(list.Get(2), 2);
+}
+TEST(NODES, tailbug2)
+{
+    LinkedList list;
+    list.InsertHead(1);
+    list.InsertTail(4);
+    list.Insert(2,2);
+    list.Insert(3,3);
+    list.Insert(123, 5);
+    ASSERT_EQ(5, list.Get(5));
+}
+TEST(NODES, copy)
+{
+    LinkedList list;
+    list.InsertHead(12);
+    list.Insert(2, 13);
+    list.Insert(3, 14);
+    LinkedList listcopy(list);
+    ASSERT_EQ(listcopy.Get(1), list.Get(1));
+    ASSERT_EQ(listcopy.Get(2), list.Get(2));
+    ASSERT_EQ(listcopy.Get(3), list.Get(3));
+}
+TEST(NODES, operatortest1)
+{
+    LinkedList list;
+    list.InsertHead(12);
+    list.Insert(2,13);
+    LinkedList listcopy = list;
+    ASSERT_EQ(list.Get(1), listcopy.Get(1));
+    ASSERT_EQ(list.Get(2), listcopy.Get(2));
+}
+
+TEST(NODES, operatortest2)
+{
+    LinkedList list;
+    list.InsertHead(12);
+    list.Insert(2, 14);
+    list.Insert(3, 16);
+    LinkedList listcopy;
+    listcopy.InsertHead(177);
+    listcopy = list;
+    ASSERT_EQ(list.Get(1), listcopy.Get(1));
+}
+// TEST(NODES, move)
+// {
+//     LinkedList list;
+//     list.InsertHead(12);
+//     list.Insert(13,2);
+//     LinkedList listcopy(std::move(list));
+//     ASSERT_EQ(12, listcopy.Get(1));
+//     ASSERT_EQ(13, listcopy.Get(2));
+// }
+// TEST(NODES, twoheads)
+// {
+//     LinkedList list;
+//     list.InsertHead(12);
+//     list.InsertHead(13);
+//     int expected = list.Get(2);
+//     ASSERT_EQ(expected, 13);
+// }
