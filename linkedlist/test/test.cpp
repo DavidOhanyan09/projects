@@ -8,7 +8,7 @@ TEST(empty_test, empty)
 
 TEST(NODES, head_insert)
 {
-    LinkedList list;
+    LinkedList<int> list;
     list.InsertHead(12);
     int expected = list.Get(1);
     ASSERT_EQ(expected, 12);
@@ -16,7 +16,7 @@ TEST(NODES, head_insert)
 
 TEST(NODES, INSERT)
 {
-    LinkedList list;
+    LinkedList<int> list;
     list.InsertHead(1);
     list.InsertTail(4);
     list.Insert(2, 2);
@@ -28,7 +28,7 @@ TEST(NODES, INSERT)
 
 TEST(NODES, Tail)
 {
-    LinkedList list;
+    LinkedList<int> list;
     list.InsertHead(1);
     list.InsertTail(2);
     int expected = 2;
@@ -38,7 +38,7 @@ TEST(NODES, Tail)
 
 TEST(NODES, Remove2)
 {
-    LinkedList list;
+    LinkedList<int> list;
     list.InsertHead(1);
     list.InsertTail(4);
     list.Insert(2,2);
@@ -51,7 +51,7 @@ TEST(NODES, Remove2)
 
 TEST(NODES, RemoveTail)
 {
-    LinkedList list;
+    LinkedList<int> list;
     list.InsertHead(1);
     list.InsertTail(4);
     list.Insert(2, 2);
@@ -64,7 +64,7 @@ TEST(NODES, RemoveTail)
 
 TEST(NODES, GetQ)
 {
-    LinkedList list;
+    LinkedList<int> list;
     list.InsertHead(12);
     list.InsertTail(15);
     list.Insert(2, 13);
@@ -75,7 +75,7 @@ TEST(NODES, GetQ)
 
 TEST(NODES, get)
 {
-    LinkedList list;
+    LinkedList<int> list;
     list.InsertHead(12);
     list.InsertTail(14);
     list.Insert(2, 13);
@@ -84,20 +84,20 @@ TEST(NODES, get)
 }
 TEST(NODES, headbug)
 {
-    LinkedList list;
+    LinkedList<int> list;
     list.Insert(1, 13);
     ASSERT_EQ(13, list.Get(1));
 }
 TEST(NODES, tailbug)
 {
-    LinkedList list;
+    LinkedList<int> list;
     list.InsertHead(1);
     list.Insert(2, 2);
     ASSERT_EQ(list.Get(2), 2);
 }
 TEST(NODES, tailbug2)
 {
-    LinkedList list;
+    LinkedList<int> list;
     list.InsertHead(1);
     list.InsertTail(4);
     list.Insert(2,2);
@@ -107,36 +107,48 @@ TEST(NODES, tailbug2)
 }
 TEST(NODES, copy)
 {
-    LinkedList list;
+    LinkedList<int> list;
     list.InsertHead(12);
     list.Insert(2, 13);
     list.Insert(3, 14);
-    LinkedList listcopy(list);
+    LinkedList<int> listcopy(list);
     ASSERT_EQ(listcopy.Get(1), list.Get(1));
     ASSERT_EQ(listcopy.Get(2), list.Get(2));
     ASSERT_EQ(listcopy.Get(3), list.Get(3));
 }
 TEST(NODES, operatortest1)
 {
-    LinkedList list;
+    LinkedList<int> list;
     list.InsertHead(12);
     list.Insert(2,13);
-    LinkedList listcopy = list;
+    LinkedList<int> listcopy = list;
     ASSERT_EQ(list.Get(1), listcopy.Get(1));
     ASSERT_EQ(list.Get(2), listcopy.Get(2));
 }
 
 TEST(NODES, operatortest2)
 {
-    LinkedList list;
+    LinkedList<int> list;
     list.InsertHead(12);
     list.Insert(2, 14);
     list.Insert(3, 16);
-    LinkedList listcopy;
+    LinkedList<int> listcopy;
     listcopy.InsertHead(177);
     listcopy = list;
     ASSERT_EQ(list.Get(1), listcopy.Get(1));
 }
+
+TEST(NODES, templates)
+{
+    LinkedList<float> list;
+    list.InsertHead(123.41234234);
+    list.Insert(2, 123.862384762);
+    LinkedList<float> listcopy;
+    listcopy = list;
+    ASSERT_EQ(list.Get(1), listcopy.Get(1));
+    ASSERT_EQ(list.Get(2), listcopy.Get(2));
+}
+
 // TEST(NODES, move)
 // {
 //     LinkedList list;
@@ -146,11 +158,18 @@ TEST(NODES, operatortest2)
 //     ASSERT_EQ(12, listcopy.Get(1));
 //     ASSERT_EQ(13, listcopy.Get(2));
 // }
-// TEST(NODES, twoheads)
-// {
-//     LinkedList list;
-//     list.InsertHead(12);
-//     list.InsertHead(13);
-//     int expected = list.Get(2);
-//     ASSERT_EQ(expected, 13);
-// }
+TEST(NODES, twoheads)
+{
+    try
+    {
+    LinkedList<int> list;
+    list.InsertHead(12);
+    list.InsertHead(13);
+    int expected = list.Get(2);
+    ASSERT_EQ(expected, 13);
+    }
+    catch(...)
+    {
+        std::cout << "Head already exist!" << std::endl;
+    }
+}
