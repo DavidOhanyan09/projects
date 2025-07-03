@@ -1,3 +1,4 @@
+#include <algorithm>
 template <typename T>
 class LinkedList
 {
@@ -47,29 +48,28 @@ public:
     }
     LinkedList& operator=(const LinkedList& other)
     {
-        if(other.head == nullptr)
-    {
-        this->head = nullptr;
+        if(this == &other)
+        {
+            return *this;
+        }
+        LinkedList temp(other);
+        std::swap(this->head, temp.head);
         return *this;
     }
-    this->head = new Node(other.head->value);
-    Node* temp = this->head;
-    Node* othertemp = other.head->next;
-    while(othertemp != nullptr)
+    LinkedList(LinkedList&& other)
     {
-        temp->next = new Node(othertemp->value);
-        temp = temp->next;
-        othertemp = othertemp->next;
+        head = other.head;
+        other.head = nullptr;
     }
-    return *this;
-    }
-    LinkedList(const LinkedList&& other)
+    LinkedList& operator=(LinkedList&& other)
     {
-
-    }
-    LinkedList& operator=(const LinkedList&& other)
-    {
-
+        if(this == &other)
+        {
+            return *this;
+        }
+        LinkedList temp(std::move(other));
+        std::swap(this->head, temp.head);
+        return *this;
     }
     ~LinkedList()
     {
@@ -78,7 +78,7 @@ public:
         {
            Node* next = temp->next;
            delete temp;
-           temp = next; 
+           temp = next;
         }
         head = nullptr;
     }

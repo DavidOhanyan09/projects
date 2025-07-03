@@ -126,25 +126,13 @@ TEST(NODES, operatortest1)
     ASSERT_EQ(list.Get(2), listcopy.Get(2));
 }
 
-TEST(NODES, operatortest2)
-{
-    LinkedList<int> list;
-    list.InsertHead(12);
-    list.Insert(2, 14);
-    list.Insert(3, 16);
-    LinkedList<int> listcopy;
-    listcopy.InsertHead(177);
-    listcopy = list;
-    ASSERT_EQ(list.Get(1), listcopy.Get(1));
-}
 
 TEST(NODES, templates)
 {
     LinkedList<float> list;
     list.InsertHead(123.41234234);
     list.Insert(2, 123.862384762);
-    LinkedList<float> listcopy;
-    listcopy = list;
+    LinkedList<float> listcopy(list);
     ASSERT_EQ(list.Get(1), listcopy.Get(1));
     ASSERT_EQ(list.Get(2), listcopy.Get(2));
 }
@@ -160,12 +148,51 @@ TEST(NODES, headinsert)
     ASSERT_EQ(20, list.Get(1));
 }
 
-// TEST(NODES, move)
-// {
-//     LinkedList list;
-//     list.InsertHead(12);
-//     list.Insert(13,2);
-//     LinkedList listcopy(std::move(list));
-//     ASSERT_EQ(12, listcopy.Get(1));
-//     ASSERT_EQ(13, listcopy.Get(2));
-// }
+TEST(NODES, copy_operator)
+{
+    LinkedList<int> list;
+    list.InsertHead(13);
+    list.Insert(2, 15);
+    LinkedList<int> copy;
+    copy.InsertHead(16);
+    copy.Insert(2, 18);
+    copy = list;
+    ASSERT_EQ(list.Get(1), copy.Get(1));
+}
+
+TEST(NODES, operator2)
+{
+    LinkedList<int> list;
+    list.InsertHead(13);
+    list.Insert(2, 15);
+    LinkedList<int> copy;
+    copy.InsertHead(13);
+    copy.Insert(2, 15);
+    copy = list;
+    ASSERT_EQ(list.Get(1), copy.Get(1));
+}
+
+TEST(NODES, move)
+{
+    LinkedList<int> list;
+    list.InsertHead(12);
+    list.Insert(2,13);
+    LinkedList<int> listcopy(std::move(list));
+    ASSERT_EQ(13, listcopy.Get(2));
+}
+
+TEST(NODES, moveoperator)
+{
+    LinkedList<int> list;
+    list.InsertHead(12);
+    list.Insert(2, 13);
+    LinkedList<int> listcopy;
+    listcopy.InsertHead(19);
+    listcopy.Insert(2, 128);
+    listcopy.Insert(3, 1238);
+    listcopy = std::move(list);
+    ASSERT_EQ(listcopy.Get(2), 13);
+    ASSERT_EQ(listcopy.Get(1), 12);
+}
+
+
