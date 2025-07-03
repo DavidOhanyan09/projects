@@ -69,7 +69,7 @@ public:
     }
     LinkedList& operator=(const LinkedList&& other)
     {
-        
+
     }
     ~LinkedList()
     {
@@ -84,18 +84,24 @@ public:
     }
     void InsertHead(T value)
     {
-        if(head == nullptr)
+        if(head == nullptr or head->next == nullptr)
         {
             head = new Node(value);
         }
         else
         {
-            throw 1;
+            Node* new_head = new Node(value);
+            new_head->next = head;
         }
     }
     void Insert(int position, T value)
     {
         if(head == nullptr)
+    {
+        this->InsertHead(value);
+        return;
+    }
+    if(position == 1)
     {
         this->InsertHead(value);
         return;

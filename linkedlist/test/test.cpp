@@ -149,6 +149,17 @@ TEST(NODES, templates)
     ASSERT_EQ(list.Get(2), listcopy.Get(2));
 }
 
+TEST(NODES, headinsert)
+{
+    LinkedList<int> list;
+    list.InsertHead(13);
+    list.InsertHead(14);
+    list.InsertHead(15);
+    list.InsertHead(16);
+    list.Insert(1, 20);
+    ASSERT_EQ(20, list.Get(1));
+}
+
 // TEST(NODES, move)
 // {
 //     LinkedList list;
@@ -158,18 +169,3 @@ TEST(NODES, templates)
 //     ASSERT_EQ(12, listcopy.Get(1));
 //     ASSERT_EQ(13, listcopy.Get(2));
 // }
-TEST(NODES, twoheads)
-{
-    try
-    {
-    LinkedList<int> list;
-    list.InsertHead(12);
-    list.InsertHead(13);
-    int expected = list.Get(2);
-    ASSERT_EQ(expected, 13);
-    }
-    catch(...)
-    {
-        std::cout << "Head already exist!" << std::endl;
-    }
-}
