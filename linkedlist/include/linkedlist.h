@@ -1,4 +1,6 @@
 #include <algorithm>
+#include <stdexcept>
+
 template <typename T>
 class LinkedList
 {
@@ -22,7 +24,6 @@ public:
 };
 private:
     Node* head;
-    
 public:
     LinkedList()
     {
@@ -84,7 +85,7 @@ public:
     }
     void InsertHead(T value)
     {
-        if(head == nullptr or head->next == nullptr)
+        if(head == nullptr)
         {
             head = new Node(value);
         }
@@ -92,50 +93,54 @@ public:
         {
             Node* new_head = new Node(value);
             new_head->next = head;
+            head = new_head;
+            return ;
         }
     }
+
+
     void Insert(int position, T value)
     {
         if(head == nullptr)
-    {
-        this->InsertHead(value);
-        return;
-    }
+        {
+            this->InsertHead(value);
+            return;
+        }
     if(position == 1)
     {
         this->InsertHead(value);
         return;
     }
-        Node* NewNode = new Node(value);
+    if(position == this->GetQ() + 1)
+    {
+        this->InsertTail(value);
+        return;
+    }
+    if(position  > this->GetQ() + 1)
+    {
+        throw std::invalid_argument("Invalid Position!");
+        return;
+    }
+    Node* NewNode = new Node(value);
+    Node* temp = head;
+    Node* prev = nullptr;
+        
+    for(int i = 1; i<position; i++)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+    prev->next = NewNode;
+    NewNode->next = temp;
+    return;
+    }
+    int Get(int position)
+    {
+        if(position > this->GetQ())
+        {
+            throw std::invalid_argument("There is no element in that position!");
+        }
         Node* temp = head;
-        Node* prev = nullptr;
-        if(temp->next == nullptr)
-        {
-            this->InsertTail(value);
-            return;
-        }
-        if(position + 1 > this->GetQ())
-        {
-            this->InsertTail(value);
-            return;
-        }
-        for(int i = 1; i<position; i++)
-        {
-            if(temp->next == nullptr)
-            {
-                //exception
-                return;
-            }
-            prev = temp;
-            temp = temp->next;
-            
-        }
-        prev->next = NewNode;
-        NewNode->next = temp; 
-        }
-        int Get(int position)
-        {
-            Node* temp = head;
         for(int i = 1; i<position; i++)
         {
             temp = temp->next;
@@ -144,27 +149,34 @@ public:
     }
     void InsertTail(T value)
     {
-        Node* temp = head;
-        Node* Tail = new Node(value);
         if(head == nullptr)
         {
-            head = Tail;
+            this->InsertHead(value);
             return;
         }
+        Node* temp = head;
+        Node* Tail = new Node(value);
         while(temp->next != nullptr)
         {
             temp = temp->next;
         }
         temp->next = Tail;
+        return;
         }
-        void Remove(int position)
-        {
-            Node* temp = head;
+
+    void Remove(int position)
+    {
+        Node* temp = head;
         Node* prev = nullptr;
         if(head == nullptr)
         {
-            //exception
-            return ;
+            throw std::logic_error("There is no elements!");
+        }
+        if(position == 1)
+        {
+           head = head->next;
+           delete temp;
+           return;
         }
         for(int i = 1; i<position; i++)
         {
@@ -176,17 +188,18 @@ public:
     }
     int GetQ()
     {
-        int quantity = 1;
+        int quantity = 0;
+        if(head == nullptr)
+        {
+            return quantity;
+        }
+        quantity++;
         Node* temp = head;
-        while(temp != nullptr)
+        while(temp->next != nullptr)
         {
             quantity++;
             temp = temp->next;
         }
-        delete temp;
         return quantity;
     }
 };
-
-
-
