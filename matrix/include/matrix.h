@@ -1,4 +1,5 @@
 #include <stdexcept>
+
 template <typename T>
 
 class Matrix
@@ -8,16 +9,16 @@ private:
     int cols;
     T** data;
 public:
-    Matrix(int r, int c)
-    {
-       rows = r;
-       cols = c;
-       data = new T*[rows];
-       for (int i = 0; i < rows; ++i)
-       {
-           data[i] = new T[cols]();
-       }
+    Matrix(int r, int c) : rows(r), cols(c) {
+        data = new T*[rows]; 
+        for (int i = 1; i <= rows; ++i) {
+            data[i] = new T[cols]; 
+            for (int j = 1; j <= cols; ++j) {
+                data[i][j] = T();
+            }
+        }
     }
+    
     Matrix(const Matrix& other)
     {
 
@@ -34,16 +35,28 @@ public:
     {
 
     }
-    ~Matrix()
-    {
 
+    ~Matrix()
+    { 
+        for(int i = 1; i<=rows; i++)
+        {
+            delete[] data[i];
+        }
+        delete[] data;
     }
+
+    T** operator+(T** other)
+    {
+        
+    }
+
     void fill(int i, int j, T value)
     {
 
-        if (i >= 0 && i < rows && j >= 0 && j < cols)
+        if (i > 0 && i <= rows && j > 0 && j <= cols)
         {
             data[i][j] = value;
+            return;
         }
         else
         {
@@ -52,9 +65,8 @@ public:
     }
     int Get(int i, int j)
     {
-        rows = i;
-        cols = j;
-        return data[rows][cols];
+        return data[i][j];
     }
+    
 };
     
