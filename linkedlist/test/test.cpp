@@ -313,3 +313,17 @@ TEST(Nodes, rmv2)
     EXPECT_EQ(list.Get(4), 102);
     EXPECT_EQ(list.Get(5), 1223);
  }
+
+ TEST(Nodes, Remove_Exception)
+ {
+    LinkedList<int> list;
+    list.InsertHead(10);
+    list.InsertTail(15);
+    EXPECT_THROW(list.Remove(3), std::invalid_argument);
+ }
+
+ TEST(Nodes, Remove_Exception2)
+ {
+    LinkedList<int> list;
+    EXPECT_THROW(list.Remove(1), std::logic_error);
+ }

@@ -172,6 +172,10 @@ public:
         {
             throw std::logic_error("There is no elements!");
         }
+        if(position > this->GetQ())
+        {
+            throw std::invalid_argument("Invalid position!");
+        }
         if(position == 1)
         {
            head = head->next;
