@@ -9,12 +9,13 @@ private:
     int cols;
     T** data;
 public:
-    Matrix(int r, int c) : rows(r), cols(c) {
+    Matrix(int r, int c) : rows(r), cols(c) 
+    {
         data = new T*[rows]; 
         for (int i = 1; i <= rows; ++i) {
             data[i] = new T[cols]; 
             for (int j = 1; j <= cols; ++j) {
-                data[i][j] = T();
+                data[i][j] = 0;
             }
         }
     }
@@ -50,12 +51,11 @@ public:
         
     }
 
-    void fill(int i, int j, T value)
+    void fill(int r, int c, T value)
     {
-
-        if (i > 0 && i <= rows && j > 0 && j <= cols)
+        if (r > 0 && r <= rows && c > 0 && c <= cols)
         {
-            data[i][j] = value;
+            data[r][c] = value;
             return;
         }
         else
@@ -63,10 +63,13 @@ public:
             throw std::invalid_argument("Given position is wrong!");
         }
     }
-    int Get(int i, int j)
+    int Get(int r, int c)
     {
-        return data[i][j];
+        if(r > rows or r<rows or c<cols or c>cols)
+        {
+            throw std::invalid_argument("Given position is wrong!");
+        }
+        return data[r][c];
     }
     
 };
-    
